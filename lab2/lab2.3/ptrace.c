@@ -17,21 +17,21 @@ int main(int argc, char *argv[]){
     if(proc == 0){
         ptrace(PTRACE_TRACEME, 0, NULL, NULL);
         execvp(argv[1], argv + 1);
+        printf("error in execvp");
+        return 1;
     } else {
         int status;
         struct user_regs_struct regs;
 
         waitpid(proc, &status, 0);
-        while (!WIFEXITED(status) || !WIFSIGNALED(status)) {
-            ptrace(PTRACE_SYSCALL, proc, NULL, &regs);
+        while (!WIFEXITED(status) && !WIFSIGNALED(status)) {
+            ptrace(PTRACE_GETREGS, proc, NULL, &regs);
+
+            long syscall_number = regs.orig_rax;
+            printf("Syscall number: %ld\n", syscall_number);
+
+            ptrace(PTRACE_SYSCALL, proc, NULL, NULL);
             waitpid(proc, &status, 0);
-            if (WIFSTOPPED(status) && WSTOPSIG(status) & 0x80) {
-                long syscall_number = regs.orig_rax;
-                printf("Syscall number: %ld\n", syscall_number);
-            }
         }
     }
 }
-//что такое vDSO
-//механизм, позволяющий оптимизировать производительность, позволяющий вызывать некоторые функции напрямую из пользовательского пространства
-//vDSO содержит функции получения времени, чтения данных о процессоре
