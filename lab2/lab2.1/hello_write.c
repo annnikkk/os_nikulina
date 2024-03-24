@@ -1,4 +1,8 @@
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
+#include <stdio.h>
+
 
 int main(){
     char* message = "Hello world";
