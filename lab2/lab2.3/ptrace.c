@@ -9,6 +9,10 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]){
+    if(argc < 2){
+        printf("wrong arguments\n use: <command_name> ");
+        return 1;
+    }
     pid_t proc = fork();
     if(proc == -1){
         perror("fork");
@@ -45,4 +49,5 @@ int main(int argc, char* argv[]){
             }
         }
     }
+    return 0;
 }
