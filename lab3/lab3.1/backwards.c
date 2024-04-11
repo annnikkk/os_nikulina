@@ -10,7 +10,7 @@ void CreatingDir(char* dir_name){
     if(mkdir(dir_name, 0777) == 0){
         printf("dir created successfully\n");
     } else {
-        printf("error in creating dir");
+        perror("error in creating dir");
     }
 }
 
@@ -36,21 +36,21 @@ void RewritingFile(FILE* from_file, FILE* to_file){
         bytes_written += fwrite(&buffer[i], 1, 1, to_file);
     }
     if(bytes_written != bytes_read){
-        printf("error in rewriting file\n");
+        perror("error in rewriting file\n");
     }
     free(buffer);
 }
 
 int main(int argc, char* argv[]){
-    if(argc < 2){
-        printf("wrong arguments\n");
+    if(argc < 3){
+        printf("wrong arguments\n, use: <dir_path> <dir_name>");
         return 1;
     }
     char* dir_path = (char*) malloc(sizeof(char) * 1024);
     snprintf(dir_path, 1024, "%s/%s", argv[1], argv[2]);
     DIR* dir = opendir(dir_path);
     if(dir == NULL){
-        printf("error in opening dir\n");
+        perror("error in opening dir\n");
         return 1;
     }
     
@@ -58,7 +58,9 @@ int main(int argc, char* argv[]){
     int dir_len = strlen(dir_name);
     
     dir_name = Reverse(dir_name, dir_len);
-    CreatingDir(dir_name);
+    char* new_dir_path = (char*) malloc(sizeof(char) * 1024);
+    snprintf(new_dir_path, 1024, "%s/%s", argv[1], dir_name);
+    CreatingDir(new_dir_path);
     
     struct dirent* cur_file;
     while((cur_file = readdir(dir)) != NULL){
@@ -71,7 +73,7 @@ int main(int argc, char* argv[]){
             FILE* original_file = fopen(file_path, "rb");
             FILE* new_file = fopen(new_file_path, "wb");
             if(original_file == NULL || new_file == NULL){
-                printf("error in opening files\n");
+                perror("error in opening files\n");
                 return 1;
             }
             RewritingFile(original_file, new_file);
