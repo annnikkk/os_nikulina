@@ -22,7 +22,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2ea5ec98-e416-4f1f-b0da-674912e76a77" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/lab3.1/backwards.c" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/lab3.1/backwards.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/lab3.1/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/lab3.1/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/lab3.2/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/lab3.2/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +61,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/annnik/programming/os_nikulina&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/annnik/programming/opp-labs&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -75,6 +76,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="YourExecutableName" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="lab3" TARGET_NAME="YourExecutableName" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="lab3" RUN_TARGET_NAME="YourExecutableName">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -100,7 +106,9 @@
       <workItem from="1712426600667" duration="2339000" />
       <workItem from="1712561805939" duration="14000" />
       <workItem from="1712736531425" duration="2064000" />
-      <workItem from="1712860329120" duration="1808000" />
+      <workItem from="1712860329120" duration="20027000" />
+      <workItem from="1712972467850" duration="2146000" />
+      <workItem from="1713327986126" duration="1642000" />
     </task>
     <servers />
   </component>
