@@ -45,18 +45,19 @@ int main(int argc, char** argv){
         return 1;
     }
     printf("mapped region successfully\n");
+    sleep(10);
     
     /*if(mprotect(region, getpagesize() * 10, PROT_NONE) == -1){
         perror("mprotect failed");
         return 1;
     }*/
     //printf("protected region successfully\n");
-    char trying_reading = *((char*) region);
+    /*char trying_reading = *((char*) region);
     if(trying_reading != -1){
         printf("I can read.");
     } else {
         perror("error reading");
-    }
+    }*/
     /*char* trying_writing = "It's my try.";
     strcpy((char*) region, trying_writing);
     printf("Region after try: %s\n", (char*) region);*/
@@ -64,5 +65,7 @@ int main(int argc, char** argv){
         perror("error in munmap");
         return 1;
     }
+    printf("pages 4-6 deleted\n");
+    sleep(10);
     return 0;
 }
