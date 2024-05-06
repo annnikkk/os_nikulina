@@ -19,7 +19,7 @@ void RecursionStack(){
 void CycleHeap(){
     char* buffers[10];
     for(int i = 0; i < 10; i++){
-        buffers[i] = (char*) malloc(sizeof(char) * 4096* 50);
+        buffers[i] = (char*) malloc(sizeof(char) * 50000500);
         sleep(1);
     }
     for(int i = 0; i < 10; i++){
@@ -28,7 +28,8 @@ void CycleHeap(){
 }
 
 void sigsegv_handler(int signum){
-    printf("Segmentation fault occurred.\n");
+    const char msg[] = "segmentation fault occurred.\n";
+    write(STDERR_FILENO, msg, sizeof(msg)-1);
     exit(EXIT_FAILURE);
 }
 
