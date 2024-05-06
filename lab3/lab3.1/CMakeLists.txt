@@ -11,4 +11,5 @@ add_executable(YourExecutableName backwards.c
         ../../lab4/lab4.2/2a.c
         ../../lab4/lab4.2/2c.c
         ../../lab5/lab5.1/main.c
-        ../../lab5/lab5.2/zombie.c)
+        ../../lab5/lab5.2/zombie.c
+        ../../lab6/lab6.1/shared_memory.c)

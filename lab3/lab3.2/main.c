@@ -40,7 +40,8 @@ int CreateFile(const char* file_name){
         perror("error in creating file\n");
         return 1;
     }
-    if(fclose(file) == 0){
+    fprintf(file, "This is content of file\n");
+    if(fclose(file) != 0){
         perror("error in closing file");
         return 1;
     }
@@ -57,6 +58,10 @@ void PrintFile(const char* file_name){
     long file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
     char* buffer = (char*) malloc(sizeof(char) * file_size);
+    if(buffer == NULL){
+        perror("error in malloc");
+        return;
+    }
     size_t bytes_read = fread(buffer, 1, file_size, file);
     if(bytes_read != file_size){
         perror("error in reading file\n");
@@ -93,6 +98,10 @@ int CreateSymlink(char* file_name, char* link_name){
 
 void PrintSymlink(const char* link_name){
     char* buffer = (char*) malloc(sizeof(char) * 1024);
+    if(buffer == NULL){
+        perror("error in malloc");
+        return;
+    }
     size_t bytes_read = readlink(link_name, buffer, sizeof(buffer));
     if(bytes_read == -1){
         perror("error in reading symlink\n");
@@ -100,10 +109,15 @@ void PrintSymlink(const char* link_name){
     }
     buffer[bytes_read] = '\0';
     printf("%s\n", buffer);
+    free(buffer);
 }
 
 void PrintFileFromSymlink(const char* link_name){
     char* buffer = (char*) malloc(sizeof(char) * 1024);
+    if(buffer == NULL){
+        perror("error in malloc");
+        return;
+    }
     size_t bytes_read = readlink(link_name, buffer, sizeof(buffer));
     if(bytes_read == -1){
         perror("error in reading symlink\n");
@@ -111,6 +125,7 @@ void PrintFileFromSymlink(const char* link_name){
     }
     buffer[bytes_read] = '\0';
     PrintFile(buffer);
+    free(buffer);
 }
 
 void DeleteSymlink(const char* link_name){
@@ -136,12 +151,17 @@ void DeleteHardlink(char* link_name){
 }
 
 void PrintInfo(char* file_name){
+    printf("I'm in PrintInfo\n");
     struct stat file_stat;
     if(stat(file_name, &file_stat) != 0){
         perror("error in getting info");
         return;
     }
     char* mode = (char*) malloc(sizeof(char) * 11);
+    if(mode == NULL){
+        perror("error in malloc");
+        return;
+    }
     for(int i = 0; i < 9; i++){
         mode[i] = '-';
     }
@@ -164,6 +184,7 @@ void PrintInfo(char* file_name){
         printf("%c", mode[i]);
     }
     printf("\n");
+    free(mode);
 }
 
 void ChangeMode(char* file_name, char* new_mode){
