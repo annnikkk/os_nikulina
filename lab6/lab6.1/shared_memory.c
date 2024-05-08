@@ -6,8 +6,6 @@
 #include <sys/wait.h>
 
 
-
-
 int main(){
     long page_size = sysconf(_SC_PAGE_SIZE);
     
