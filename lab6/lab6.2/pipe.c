@@ -32,9 +32,10 @@ int main(){
     } else {
         while(1){
             write(pipe_fds[1], &cur_value, sizeof(unsigned int));
+            printf("i'n here\n");
             cur_value++;
             if(cur_value == max_value) cur_value = 0;
-            sleep(1);
+            //sleep(1);
         }
     }
     return 0;

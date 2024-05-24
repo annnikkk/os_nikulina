@@ -23,7 +23,7 @@
     <list default="true" id="2ea5ec98-e416-4f1f-b0da-674912e76a77" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab3/lab3.1/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/lab3.1/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/lab4.2/2c.c" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/lab4.2/2c.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab6/lab6.2/pipe.c" beforeDir="false" afterPath="$PROJECT_DIR$/lab6/lab6.2/pipe.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,12 +61,14 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/annnik/programming/opp-labs&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/annnik/programming/os_nikulina&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -77,11 +79,6 @@
   </component>
   <component name="RunManager">
     <configuration name="YourExecutableName" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="lab3" TARGET_NAME="YourExecutableName" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="lab3" RUN_TARGET_NAME="YourExecutableName">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -110,6 +107,18 @@
       <workItem from="1712972467850" duration="2146000" />
       <workItem from="1713327986126" duration="20475000" />
       <workItem from="1713947989270" duration="12179000" />
+      <workItem from="1714547952880" duration="15411000" />
+      <workItem from="1714845611456" duration="1436000" />
+      <workItem from="1714996691403" duration="2600000" />
+      <workItem from="1715105675015" duration="3390000" />
+      <workItem from="1715327195450" duration="12936000" />
+      <workItem from="1715618505234" duration="2648000" />
+      <workItem from="1715690137540" duration="5392000" />
+      <workItem from="1715762902187" duration="5476000" />
+      <workItem from="1715939826253" duration="351000" />
+      <workItem from="1716002149938" duration="5186000" />
+      <workItem from="1716533745818" duration="24000" />
+      <workItem from="1716533784481" duration="95000" />
     </task>
     <servers />
   </component>
