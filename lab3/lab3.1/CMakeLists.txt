@@ -18,4 +18,11 @@ add_executable(YourExecutableName backwards.c
         ../../lab7/lab7.1/udp_server.c
         ../../lab8/main.c
         ../../lab7/lab7.2/tcp_client.c
-        ../../lab7/lab7.2/tcp_server.c)
+        ../../lab7/lab7.2/tcp_server.c
+        ../../lab5/lab5.3/clone.c
+        ../../lab7/lab7.3/poll_server.c
+        ../../lab7/lab7.3/poll_client.c
+        ../lab3.3/pagemap.c
+        ../../lab6/lab6.3/domain_client.c
+        ../../lab4/lab4.3/malloc.c
+)
