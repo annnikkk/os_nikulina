@@ -34,7 +34,7 @@ int main(){
         }
         ssize_t recv_len = recv(sock_fd, message, sizeof(message), 0);
         if(recv_len <= 0){
-            if(len == 0) printf("host %d disconnected", client_fd);
+            if(recv_len == 0) printf("host %d disconnected", sock_fd);
             else perror("error in receiving");
             break;
         }

@@ -20,6 +20,7 @@ int main(){
     
     if(bind(sock_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1 ){
         perror("error in bind");
+        close(sock_fd);
         return 1;
     }
     socklen_t client_addr_len = sizeof(client_addr);
