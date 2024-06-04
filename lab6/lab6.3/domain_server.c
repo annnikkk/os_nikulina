@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <sys/un.h>
@@ -21,6 +22,11 @@ void handle_sigint(int sig) {
         close(sock_fd);
         sock_fd = -1;
     }
+}
+
+void handle_child_sigint(int sig) {
+    (void)sig;
+    exit(0);
 }
 
 void handle_sigchld(int sig) {
@@ -82,6 +88,7 @@ int main(){
         
         if(new_pid == 0){
             close(sock_fd);
+            signal(SIGINT, handle_child_sigint);
             
             while(1){
                 ssize_t len = recv(client_fd, message, MESSAGE_LEN, 0);
