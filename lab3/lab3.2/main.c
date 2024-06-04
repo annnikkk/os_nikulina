@@ -5,10 +5,11 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#define BUFFER_SIZE 1024
 
 int CreateDir(const char* dir_name){
     if(mkdir(dir_name, 0777) != 0){
-        perror("error in creating dir\n");
+        perror("error in creating dir");
         return 1;
     }
     return 0;
@@ -17,7 +18,7 @@ int CreateDir(const char* dir_name){
 void ListDir(const char* dir_name){
     DIR* dir = opendir(dir_name);
     if(dir == NULL){
-        perror("error in opening dir\n");
+        perror("error in opening dir");
         return;
     }
     struct dirent* cur_file;
@@ -29,7 +30,7 @@ void ListDir(const char* dir_name){
 
 void DeleteDir(const char* dir_name){
     if(rmdir(dir_name) != 0){
-        perror("error in deleting dir\n");
+        perror("error in deleting dir");
         return;
     }
 }
@@ -37,7 +38,7 @@ void DeleteDir(const char* dir_name){
 int CreateFile(const char* file_name){
     FILE* file = fopen(file_name, "w+");
     if(file == NULL){
-        perror("error in creating file\n");
+        perror("error in creating file");
         return 1;
     }
     fprintf(file, "This is content of file\n");
@@ -57,23 +58,25 @@ void PrintFile(const char* file_name){
     fseek(file, 0, SEEK_END);
     long file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
-    char* buffer = (char*) malloc(sizeof(char) * file_size);
+    char* buffer = (char*) malloc(sizeof(char) * file_size + 1);
     if(buffer == NULL){
         perror("error in malloc");
+        if(fclose(file) != 0){
+            perror("error in closing file");
+        }
         return;
     }
     size_t bytes_read = fread(buffer, 1, file_size, file);
     if(bytes_read != file_size){
-        perror("error in reading file\n");
+        perror("error in reading file");
         free(buffer);
         if(fclose(file) != 0){
             perror("error in closing file");
         }
         return;
     }
-    for(int i = 0; i < file_size; i++){
-        printf("%c", buffer[i]);
-    }
+    buffer[file_size] = '\0';
+    printf("%s", buffer);
     free(buffer);
     if(fclose(file) != 0){
         perror("error in closing file");
@@ -83,61 +86,51 @@ void PrintFile(const char* file_name){
 
 void DeleteFile(const char* file_name){
     if(remove(file_name) != 0){
-        perror("error in deleting file\n");
+        perror("error in deleting file");
         return;
     }
 }
 
 int CreateSymlink(char* file_name, char* link_name){
     if(symlink(file_name, link_name) != 0){
-        perror("error in creating symlink\n");
+        perror("error in creating symlink");
         return 1;
     }
     return 0;
 }
 
 void PrintSymlink(const char* link_name){
-    char* buffer = (char*) malloc(sizeof(char) * 1024);
-    if(buffer == NULL){
-        perror("error in malloc");
-        return;
-    }
-    size_t bytes_read = readlink(link_name, buffer, sizeof(buffer));
+    char buffer[BUFFER_SIZE];
+    size_t bytes_read = readlink(link_name, buffer, BUFFER_SIZE - 1);
     if(bytes_read == -1){
-        perror("error in reading symlink\n");
+        perror("error in reading symlink");
         return;
     }
     buffer[bytes_read] = '\0';
     printf("%s\n", buffer);
-    free(buffer);
 }
 
 void PrintFileFromSymlink(const char* link_name){
-    char* buffer = (char*) malloc(sizeof(char) * 1024);
-    if(buffer == NULL){
-        perror("error in malloc");
-        return;
-    }
-    size_t bytes_read = readlink(link_name, buffer, sizeof(buffer));
+    char buffer[BUFFER_SIZE];
+    size_t bytes_read = readlink(link_name, buffer, BUFFER_SIZE - 1);
     if(bytes_read == -1){
-        perror("error in reading symlink\n");
+        perror("error in reading symlink");
         return;
     }
     buffer[bytes_read] = '\0';
     PrintFile(buffer);
-    free(buffer);
 }
 
 void DeleteSymlink(const char* link_name){
     if(unlink(link_name) == -1){
-        perror("error in deleting symlink\n");
+        perror("error in deleting symlink");
         return;
     }
 }
 
 int CreateHardlink(const char* file_name, const char* link_name){
     if(link(file_name, link_name) == -1){
-        perror("error in creating hardlink\n");
+        perror("error in creating hardlink");
         return 1;
     }
     return 0;
@@ -145,7 +138,7 @@ int CreateHardlink(const char* file_name, const char* link_name){
 
 void DeleteHardlink(char* link_name){
     if(unlink(link_name) == -1){
-        perror("error in deleting hardlink\n");
+        perror("error in deleting hardlink");
         return;
     }
 }
@@ -157,34 +150,22 @@ void PrintInfo(char* file_name){
         perror("error in getting info");
         return;
     }
-    char* mode = (char*) malloc(sizeof(char) * 11);
-    if(mode == NULL){
-        perror("error in malloc");
-        return;
-    }
-    for(int i = 0; i < 9; i++){
-        mode[i] = '-';
-    }
-    mode[10] = '\0';
     
-    if(S_ISDIR(file_stat.st_mode)) mode[0] = 'd';
-    else if(S_ISLNK(file_stat.st_mode)) mode[0] = 'l';
+    if(S_ISDIR(file_stat.st_mode)) printf("d");
+    else if(S_ISLNK(file_stat.st_mode)) printf("l");
+    else printf("-");
     
-    if((file_stat.st_mode & S_IRUSR) != 0) mode[1] = 'r';
-    if((file_stat.st_mode & S_IWUSR) != 0) mode[2] = 'w';
-    if((file_stat.st_mode & S_IXUSR) != 0) mode[3] = 'x';
-    if((file_stat.st_mode & S_IRGRP) != 0) mode[4] = 'r';
-    if((file_stat.st_mode & S_IWGRP) != 0) mode[5] = 'w';
-    if((file_stat.st_mode & S_IXGRP) != 0) mode[6] = 'x';
-    if((file_stat.st_mode & S_IROTH) != 0) mode[7] = 'r';
-    if((file_stat.st_mode & S_IWOTH) != 0) mode[8] = 'w';
-    if((file_stat.st_mode & S_IXOTH) != 0) mode[9] = 'x';
+    printf((file_stat.st_mode & S_IRUSR) != 0 ? "r" : "-");
+    printf((file_stat.st_mode & S_IWUSR) != 0 ? "w" : "-");
+    printf((file_stat.st_mode & S_IXUSR) != 0 ? "x" : "-");
+    printf((file_stat.st_mode & S_IRGRP) != 0 ? "r" : "-");
+    printf((file_stat.st_mode & S_IWGRP) != 0 ? "w" : "-");
+    printf((file_stat.st_mode & S_IXGRP) != 0 ? "x" : "-");
+    printf((file_stat.st_mode & S_IROTH) != 0 ? "r" : "-");
+    printf((file_stat.st_mode & S_IWOTH) != 0 ? "w" : "-");
+    printf((file_stat.st_mode & S_IXOTH) != 0 ? "x" : "-");
     
-    for(int i = 0; i < 9; i++){
-        printf("%c", mode[i]);
-    }
     printf("\n");
-    free(mode);
 }
 
 void ChangeMode(char* file_name, char* new_mode){
