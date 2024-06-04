@@ -20,12 +20,12 @@ int main(){
     socklen_t server_addr_len = sizeof(server_addr);
     while(1){
         printf("enter your message:");
-        fgets(message,1024, stdin);
-        int send_len = sendto(sock_fd, message, 1024, 0, (struct sockaddr*)&server_addr, sizeof(server_addr));
+        fgets(message, sizeof(message), stdin);
+        int send_len = sendto(sock_fd, message, sizeof(message), 0, (struct sockaddr*)&server_addr, sizeof(server_addr));
         printf("i'm here %d", send_len);
-        int recv_len = recvfrom(sock_fd, message, 1024, 0, (struct sockaddr*)&server_addr, &server_addr_len);
-        message[recv_len-1] = '\0';
+        ssize_t recv_len = recvfrom(sock_fd, message, sizeof(message), 0, (struct sockaddr*)&server_addr, &server_addr_len);
         printf("message from server: %s", message);
     }
+    close(sock_fd);
     return 0;
 }

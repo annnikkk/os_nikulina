@@ -25,7 +25,7 @@ int main(){
     socklen_t client_addr_len = sizeof(client_addr);
     char message[1024];
     while(1){
-        long len = recvfrom(sock_fd, message, sizeof(message), 0, (struct sockaddr*) &client_addr, &client_addr_len);
+        ssize_t len = recvfrom(sock_fd, message, sizeof(message)-1, 0, (struct sockaddr*) &client_addr, &client_addr_len);
         if(len  == -1){
             perror("error in recvfrom");
             break;

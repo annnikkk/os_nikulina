@@ -50,18 +50,21 @@ int main(){
         if(new_pid == 0){
             close(sock_fd);
             while(1){
-                long len = recv(client_fd, message, sizeof(message), 0);
-                if(len == -1){
-                    perror("error in recv");
+                ssize_t len = recv(client_fd, message, sizeof(message)-1, 0);
+                if(len <= 0){
+                    if(len == 0) printf("host %d disconnected", client_fd);
+                    else perror("error in recv");
                     break;
                 }
-                message[len] = '\0';
+                message[len] = '\0'; //так и было написано, но сейчас я принимаю 1023 и последним ставлю символ конца строки
                 printf("client message: %s", message);
                 if(send(client_fd, message, len, 0) == -1){
                     perror("error in send");
                     break;
                 }
             }
+            close(client_fd);
+            return 0;
         }
         close(client_fd);
     }

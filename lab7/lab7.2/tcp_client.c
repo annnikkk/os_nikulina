@@ -3,7 +3,6 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-
 #define PORT 1234
 
 
@@ -27,20 +26,20 @@ int main(){
     while(1){
         printf("enter your message:");
         fgets(message,1024, stdin);
-        int send_len = send(sock_fd, message, 1024, 0);
+        int send_len = send(sock_fd, message, sizeof(message), 0);
         if(send_len <= 0){
             perror("error in sending");
             close(sock_fd);
             break;
         }
-        int recv_len = recv(sock_fd, message, 1024, 0);
+        ssize_t recv_len = recv(sock_fd, message, sizeof(message), 0);
         if(recv_len <= 0){
-            perror("error in receiving");
-            close(sock_fd);
+            if(len == 0) printf("host %d disconnected", client_fd);
+            else perror("error in receiving");
             break;
         }
-        message[recv_len-1] = '\0';
         printf("message from server: %s", message);
     }
+    close(sock_fd);
     return 0;
 }

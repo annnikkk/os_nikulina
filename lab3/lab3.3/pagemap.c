@@ -36,7 +36,6 @@ int parse_maps_entry(const char* maps_entry, uint64_t* start_addr, uint64_t* end
     if(ret == 1){
         return 1;
     }
-    
     ret = extract_number(end_ptr + 1, end_addr, &end_ptr);
     
     return ret;

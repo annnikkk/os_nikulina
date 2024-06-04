@@ -8,7 +8,8 @@
 #include <poll.h>
 
 #define PORT 1235
-
+#define MAX_CLIENTS 5
+#define MESSAGE_LEN 1024
 
 int main(){
     int sock_fd = socket(PF_INET, SOCK_STREAM, 0);
@@ -34,16 +35,18 @@ int main(){
     
     if(bind(sock_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1 ){
         perror("error in bind");
+        close(sock_fd);
         return 1;
     }
     
-    if(listen(sock_fd, 5) == -1){
+    if(listen(sock_fd, MAX_CLIENTS) == -1){
         perror("error in listen");
+        close(sock_fd);
         return 1;
     }
     
-    int client_sockets[5], active;
-    struct pollfd fd[6];
+    int client_sockets[MAX_CLIENTS], active;
+    struct pollfd fd[MAX_CLIENTS+1];
     
     memset(client_sockets, 0, sizeof(client_sockets));
     memset(fd, 0, sizeof(fd));
@@ -51,10 +54,12 @@ int main(){
     fd[0].fd = sock_fd;
     fd[0].events = POLLIN;
     
-    char message[1024];
+    char message[MESSAGE_LEN];
     int client_fd;
+    socklen_t client_addr_len = sizeof(client_addr);
+    
     while(1){
-        active = poll(fd, 6, -1);
+        active = poll(fd, MAX_CLIENTS+1, -1);
         if((active < 0) && (errno != EINTR)) {
             perror("error in poll");
             break;
@@ -65,24 +70,23 @@ int main(){
                 perror("error in accept");
                 break;
             }
-            
-            for(int i = 1; i < 6; i++) {
+            for(int i = 1; i <= MAX_CLIENTS ; i++) {
                 if(client_sockets[i-1] == 0) {
                     client_sockets[i-1] = client_fd;
                     fd[i].fd = client_fd;
-                    fd[i].revents = POLLIN;
+                    fd[i].revents = POLLIN;//
                     break;
                 } else{
                     //printf("%d-ое место занято, там сидит бабайка %d\n", i-1, client_sockets[i-1]);
                 }
             }
         }
-        for(int i = 1; i < 6; i++) {
+        for(int i = 1; i < MAX_CLIENTS+1; i++) {
             if(client_sockets[i-1] > 0 && (fd[i].revents & POLLIN)) {
                 fd[i].revents = 0;
                 ssize_t read_bytes;
-                if((read_bytes = recv(client_sockets[i-1], message, 1024, 0)) <= 0) {
-                    if(read_bytes == 0) printf("host %d disconnected\n", client_sockets[i-1]);
+                if((read_bytes = recv(client_sockets[i-1], message, MESSAGE_LEN, 0)) <= 0) {
+                    if(read_bytes == 0) printf("host %d disconnected\n", i-1);
                     else perror("error in recv");
                     close(client_sockets[i-1]);
                     client_sockets[i-1] = 0;

@@ -4,6 +4,7 @@
 #include <sys/un.h>
 
 #define FILE_PATH "./file.txt"
+#define MESSAGE_LEN 1024
 
 
 int main(){
@@ -58,7 +59,7 @@ int main(){
             }*/
             
             while(1){
-                long len = recv(client_fd, message, sizeof(message), 0);
+                ssize_t len = recv(client_fd, message, MESSAGE_LEN - 1, 0);
                 if(len == -1){
                     perror("error in recv");
                     break;
